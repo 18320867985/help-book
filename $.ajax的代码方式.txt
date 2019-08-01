@@ -1,0 +1,43 @@
+
+                $.ajax({
+                    type: "post",
+                    url: "@Url.Action("ClickDom", "sell")",//int pageIndex,int pageSize
+                    data: { "id": id},
+                    success: function (data) {
+
+                        if (data > 0) {
+                            var p = $(my).parents(".list-group-item");
+
+                            $(p).remove();
+                            if ($(".dtl-big .list-group-item").length == 0) {
+                                var mm = " <div style='padding-top:100px;' ><h5 class='text-center text-warning'>...找不到相关数据...</h5></div>";
+
+                                $("#load-cont").html(mm);
+                            }
+
+                        } else {
+                            alert("数据更新失败！");
+                        }
+
+                    },
+
+                    timeout: 10000,
+
+                    beforeSend: function () {
+
+
+                        $("#load").show();
+                    },
+
+
+                    error: function () {
+
+                        $("#load").hide();
+
+                        $("#load-cont").html("<div  style='padding-top:30%; ' class='text-center  width-100'><b>...网络链接超时,数据加载失败...</b></div>")
+
+                    }
+
+
+
+                });
